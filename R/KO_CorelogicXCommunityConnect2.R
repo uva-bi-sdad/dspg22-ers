@@ -25,7 +25,7 @@ con <- dbConnect(PostgreSQL(),
                  dbname = "sdad",
                  host = "postgis1", 
                  port = 5432, 
-                 password = "kno5cac") 
+                 password = "db_pwd") 
 
 
 
