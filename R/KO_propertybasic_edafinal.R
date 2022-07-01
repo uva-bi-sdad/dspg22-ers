@@ -1,5 +1,5 @@
 #######################################################################################
-# Kristian Olsson - ERS data EDA final
+#ERS data EDA final
 #######################################################################################
 
 #######################################################################################
@@ -26,7 +26,7 @@ con <- dbConnect(PostgreSQL(),
                  dbname = "sdad",
                  host = "postgis1", 
                  port = 5432, 
-                 password = "kno5cac") 
+                 password = "db_pwd") 
 
 # gather data
 query_columns = paste0("SELECT *
