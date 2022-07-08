@@ -64,7 +64,7 @@ RCP_project_data <- read_excel(paste0(path, "RUS_RC_Shapefiles_August2021/Round 
 # STATES SERVED
 
 # sf settings to avoid Loop 0 error
-sf_use_s2(TRUE)
+sf_use_s2(FALSE)
 # get US state shapefile
 states <- st_as_sf(states())
 
@@ -124,7 +124,7 @@ datalist = list()
 state_fips <- shape$stateID[[1]]
 
 for (state_id in state_fips){
-q = paste0("SELECT geoid_cnty, geoid_blk, sale_price, sale_date,
+q = paste0("SELECT p_id_iris_frmtd, geoid_cnty, geoid_blk, sale_price, sale_date,
       property_centroid_latitude, property_centroid_longitude
 FROM
     corelogic_usda.current_tax_200627_latest_all_add_vars_add_progs_geom_blk
@@ -144,6 +144,12 @@ rows <- dbGetQuery(con, q)
 datalist<- rbind(datalist,rows)
 }
 dbDisconnect(con)
+datalist <- datalist %>% select(c("pid", "property_latitude", 
+                                  "property_centroid_longitude"))
+names(datalist)[1] <- "pid"
+names(datalist)[2] <- "property_latitude"
+names(datalist)[3] <- "property_longitude"
+saveRDS("~/git/properties_inside_out_20mi/data/mock_property_locations.RDS", datalist)
 
 #################################################
 # FIND ALL PROPERTIES WIHIN 10mi OF PROGRAM AREA
