@@ -1,4 +1,4 @@
-# Example of broadband shape plot, property data query and linking the two together
+# Get the counts of properties inside and outside the sevice area years before and after the program
 
 # packages / install if necessary 
 library(readxl)
@@ -125,11 +125,11 @@ AND geoid_cnty LIKE '", state_id, "%'")
   tot_in_count <- append(tot_in_count, length(CL_inside$sale_price))
   tot_out_count <- append(tot_out_count, length(CL_outside$sale_price))
   
-  bef_out_count <- append(bef_out_count, length(CL_outside$sale_price[CL_outside$sale_year <= 2010,]))
-  bef_in_count <- append(bef_in_count, length(CL_inside$sale_price[CL_inside$sale_year <= 2010,]))
+  bef_out_count <- append(bef_out_count, length(CL_outside$sale_price[CL_outside$sale_year <= 2010]))
+  bef_in_count <- append(bef_in_count, length(CL_inside$sale_price[CL_inside$sale_year <= 2010]))
   
-  aft_out_count <- append(aft_out_count, length(CL_outside$sale_price[CL_outside$sale_year > 2010,]))
-  aft_in_count <- append(aft_in_count, length(CL_inside$sale_price[CL_inside$sale_year > 2010,]))
+  aft_out_count <- append(aft_out_count, length(CL_outside$sale_price[CL_outside$sale_year > 2010]))
+  aft_in_count <- append(aft_in_count, length(CL_inside$sale_price[CL_inside$sale_year > 2010]))
   
 }
 
@@ -142,4 +142,6 @@ out_data <- list(state = newbip_union$stateABBR,
                  aft_in_20m = aft_in_count,
                  aft_out_20m = aft_out_count
 )
+out_df <- as.data.frame(out_data)
+
 
